@@ -10,6 +10,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
     SystemStore systemStore;
     systemStore.Init();
+    systemStore.AddUser("Engineer", "Engineer", UserRole::ENGINEER, "No Restriction");
 	return 0;
 }
 

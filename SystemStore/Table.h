@@ -41,7 +41,8 @@ namespace SystemStore
     using StatementPtr  = std::shared_ptr<SQLite::Statement> ;
     using TablePtr      = std::shared_ptr<Table>;
     using TableConstPtr = std::shared_ptr<Table const>;
-    using DatabasePtr   = std::shared_ptr<SQLite::Database>;
+    using DatabasePtr   = std::shared_ptr<SQLite::Database>;    
+    #define ToInt32(param)      (static_cast<Int32>(param))
 
     class Table: private Uncopyable
     {

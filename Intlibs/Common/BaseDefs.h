@@ -47,7 +47,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/variant.hpp>
 #include "BaseTypes.h"
-#include "Exception.h"
 #include "FileUtils.h"
 
 #endif//AGILENT_BBOX_COMMON_BASEDEFS_H

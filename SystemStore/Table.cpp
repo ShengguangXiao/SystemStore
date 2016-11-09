@@ -42,7 +42,7 @@ namespace SystemStore
       : _db(db)
     {
         if (!this->_db)
-            throw Exception::InternalError(SL("Null connection argument to SQLiteImpl1::Table::Table."));
+            throw std::exception(SL("Null connection argument to SQLiteImpl1::Table::Table."));
     }
 
     StatementPtr Table::BuildDeleteCommand(int keyFieldIndex) const
@@ -1114,7 +1114,7 @@ namespace SystemStore
             if (!IsNullOk(fieldIndex))
             {
                 String fmt = SL("bind value cannot be zero for NOT NULL field \"%s\" in table \"%s\".");
-                throw Exception::InvalidArgument((boost::format(fmt) % GetFieldName(fieldIndex) % GetTableName()).str());
+                throw std::exception((boost::format(fmt) % GetFieldName(fieldIndex) % GetTableName()).str().c_str());
             }
 
             command->bind(index);
@@ -1183,7 +1183,7 @@ namespace SystemStore
         // The default action is to return an empty string for
         // the name (assuming that the index is in range).
         if (index >= GetConstraintCount())
-            throw Exception::InternalError(SL("Constraint index out of range in SQLiteImpl1::Table::GetConstraintName."));
+            throw std::exception(SL("Constraint index out of range in SQLiteImpl1::Table::GetConstraintName."));
 
         return String();
     }
@@ -1194,9 +1194,9 @@ namespace SystemStore
         // reason or another. If a table class has constraints,
         // it must implement this method.
         if (index >= GetConstraintCount())
-            throw Exception::InternalError(SL("Constraint index out of range in SQLiteImpl1::Table::GetConstraintSql."));
+            throw std::exception(SL("Constraint index out of range in SQLiteImpl1::Table::GetConstraintSql."));
 
-        throw Exception::InternalError(SL("Constraint cannot be returned by SQLiteImpl1::Table::GetConstraintSql."));
+        throw std::exception(SL("Constraint cannot be returned by SQLiteImpl1::Table::GetConstraintSql."));
     }
 
     void Table::Create()
@@ -1354,7 +1354,7 @@ namespace SystemStore
                 // lists, the form is "(x = 7 or x = 4 or x = 9 or x = 2").
                 // For big lists, the form is "(x in (7,4,9,2,3,1,8,...))".
                 if (values.empty())
-                    Exception::ThrowInternalError(SL("Empty in-values list."), SL("Table::anon::InValuesExpression"), __FILE__, __LINE__);
+                    throw std::exception(SL("Empty in-values list."));
 
                 size_t const BIG = 32; // Better than 8, 20, 50, and 100.
                 String s;

@@ -1,14 +1,21 @@
 #pragma once
 
 #include <memory>
-
-#include <SQLiteCpp/SQLiteCpp.h>
-#include <SQLiteCpp/VariadicBind.h>
+#include "Common\\BaseDefs.h"
 
 namespace AOI
 {
 namespace SystemStore
 {
+
+enum class UserRole
+{
+    OPERATOR,
+    ADMINISTRATOR,
+    ENGINEER,
+    DEVELOPER,
+    END_,
+};
 
 class SystemStore
 {
@@ -16,8 +23,10 @@ public:
     SystemStore();
     ~SystemStore();
     int Init();
+    void AddUser(const String & name, const String & password, UserRole role, const String &restriction);
 private:
-    std::shared_ptr<SQLite::Database> _db;
+    struct Impl;
+    std::unique_ptr<Impl> _pImpl;
 };
 
 }
