@@ -3,6 +3,11 @@
 #include "UserTable.h"
 #include "Constants.h"
 
+namespace AOI
+{
+namespace SystemStore
+{
+
 SystemStore::SystemStore()
 {
     // Open a database file in create/write mode
@@ -17,5 +22,10 @@ SystemStore::~SystemStore()
 
 int SystemStore::Init()
 {
+    if ( !_db->tableExists ( UserTable::StaticGetTableName() ) )
+        UserTable(_db).Create();
     return 0;
+}
+
+}
 }

@@ -83,6 +83,10 @@ namespace SystemStore
         // Bind(1, <keyFieldValue>);
         StatementPtr BuildSelectCommand(int fieldIndex, int keyFieldIndex) const;
 
+        // Sql: "select <f1> from <table> where <key1> = ? and <key2> = ?;".
+        // Bind(1, <keyFieldValue>);
+        StatementPtr BuildSelectCommand(int fieldIndex, int keyFieldIndex1, int keyFieldIndex2) const;
+
         // Sql: "select <f1> from <table>;".
         StatementPtr   BuildSelectQuery(int fieldIndex) const;
 
@@ -285,7 +289,7 @@ namespace SystemStore
     public:
         virtual ~Table() {}
 
-        DatabasePtr const &GetConnection() const { return this->_db; }
+        DatabasePtr const &GetDatabase() const { return this->_db; }
 
         static Int64 const ID_NULL = 0;
         static bool  const ID_SAFE = true;

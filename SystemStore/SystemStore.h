@@ -5,6 +5,11 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/VariadicBind.h>
 
+namespace AOI
+{
+namespace SystemStore
+{
+
 class SystemStore
 {
 public:
@@ -15,3 +20,5 @@ private:
     std::shared_ptr<SQLite::Database> _db;
 };
 
+}
+}

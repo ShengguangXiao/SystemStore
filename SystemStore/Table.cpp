@@ -108,6 +108,14 @@ namespace SystemStore
         return std::make_shared<SQLite::Statement>( *_db.get(), sql );
     }
 
+    StatementPtr Table::BuildSelectCommand(int fieldIndex, int keyFieldIndex1, int keyFieldIndex2) const
+    {
+        // Used when one single-column row will be selected.
+        String const fmt = SL("select %s from %s where %s = ? and %s = ?;");
+        String const sql = (boost::format(fmt) % GetFieldName(fieldIndex) % GetTableName() % GetFieldName(keyFieldIndex1) % GetFieldName(keyFieldIndex1) ).str();
+        return std::make_shared<SQLite::Statement>( *_db.get(), sql );
+    }
+
     StatementPtr Table::BuildSelectQuery(int fieldIndex) const
     {
          // Used when one single-column row will be selected.
@@ -1127,31 +1135,31 @@ namespace SystemStore
 
     void Table::Exec(StatementPtr const &command, Int32 &value) const
     {
-        Exec(command);
+        command->executeStep();
         value = command->getColumn(0).getInt();
     }
 
     void Table::Exec(StatementPtr const &command, Int64 &value) const
     {
-        Exec(command);
+        command->executeStep();
         value = command->getColumn(0).getInt64();
     }
 
     void Table::Exec(StatementPtr const &command, double &value) const
     {
-        Exec(command);
+        command->executeStep();
         value = command->getColumn(0).getDouble();
     }
 
     void Table::Exec(StatementPtr const &command, String &value) const
     {
-        Exec(command);
+        command->executeStep();
         value = command->getColumn(0).getString();
     }
 
     void Table::Exec(StatementPtr const &command, Binary &value) const
     {
-        Exec(command);
+        command->executeStep();
 
         typedef Binary::value_type const Target;
         const void *source = command->getColumn(0).getBlob();

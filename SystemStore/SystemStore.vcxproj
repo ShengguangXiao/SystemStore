@@ -81,12 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="IdBasedTable.h" />
     <ClInclude Include="SystemStore.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UserTable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IdBasedTable.cpp" />
     <ClCompile Include="SystemStore.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="UserTable.cpp" />
