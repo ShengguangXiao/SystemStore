@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExtLibsBoost", "Extlibs\201
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SystemStore", "SystemStore\SystemStore.vcxproj", "{C0119840-DA71-47DF-A1B1-23A2357C4E11}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLiteCpp", "Extlibs\SQLiteCpp\SQLiteCpp\SQLiteCpp.vcxproj", "{4A0A5F9F-CB43-491D-911C-881A0F83B33E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSystemStore", "TestSystemStore\TestSystemStore.vcxproj", "{432E1A00-916D-4E7F-8857-3A2924B3CD78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +25,14 @@ Global
 		{C0119840-DA71-47DF-A1B1-23A2357C4E11}.Debug|Win32.Build.0 = Debug|Win32
 		{C0119840-DA71-47DF-A1B1-23A2357C4E11}.Release|Win32.ActiveCfg = Release|Win32
 		{C0119840-DA71-47DF-A1B1-23A2357C4E11}.Release|Win32.Build.0 = Release|Win32
+		{4A0A5F9F-CB43-491D-911C-881A0F83B33E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4A0A5F9F-CB43-491D-911C-881A0F83B33E}.Debug|Win32.Build.0 = Debug|Win32
+		{4A0A5F9F-CB43-491D-911C-881A0F83B33E}.Release|Win32.ActiveCfg = Release|Win32
+		{4A0A5F9F-CB43-491D-911C-881A0F83B33E}.Release|Win32.Build.0 = Release|Win32
+		{432E1A00-916D-4E7F-8857-3A2924B3CD78}.Debug|Win32.ActiveCfg = Debug|Win32
+		{432E1A00-916D-4E7F-8857-3A2924B3CD78}.Debug|Win32.Build.0 = Debug|Win32
+		{432E1A00-916D-4E7F-8857-3A2924B3CD78}.Release|Win32.ActiveCfg = Release|Win32
+		{432E1A00-916D-4E7F-8857-3A2924B3CD78}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
