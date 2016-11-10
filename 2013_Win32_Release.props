@@ -15,7 +15,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(BuildLevel)\IntLibs;$(BuildLevel)\ExtLibs\boost_1_59_0;$(BuildLevel)\BBoxEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BuildLevel)\IntLibs;$(BuildLevel)\ExtLibs\boost_1_59_0;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>

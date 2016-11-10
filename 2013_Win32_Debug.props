@@ -14,7 +14,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(BuildLevel)\IntLibs;$(BuildLevel)\ExtLibs\boost_1_59_0;$(BuildLevel)\BBoxEngine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BuildLevel)\IntLibs;$(BuildLevel)\ExtLibs\boost_1_59_0;</AdditionalIncludeDirectories>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
