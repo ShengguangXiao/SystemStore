@@ -1,8 +1,8 @@
 #include "Common/BaseDefs.h"
+#include <SQLiteCpp/SQLiteCpp.h>
 #include "SystemStore.h"
 #include "UserTable.h"
 #include "Constants.h"
-#include <SQLiteCpp/SQLiteCpp.h>
 
 namespace AOI
 {
@@ -10,7 +10,9 @@ namespace SystemStore
 {
 
 struct SystemStore::Impl { // as before
-    std::shared_ptr<SQLite::Database> db;
+    DatabasePtr     db;
+    UserTablePtr    userTable;
+    String          errMsg;
 };
 
 SystemStore::SystemStore():_pImpl(std::make_unique<Impl>())
@@ -26,14 +28,47 @@ SystemStore::~SystemStore()
 
 int SystemStore::Init()
 {
+    _pImpl->userTable = std::make_shared<UserTable>( _pImpl->db );
     if ( !_pImpl->db->tableExists ( UserTable::StaticGetTableName() ) )
-        UserTable(_pImpl->db).Create();
+        _pImpl->userTable->Create();
     return 0;
 }
 
-void SystemStore::AddUser(const String &name, const String &password, UserRole role, const String &restriction)
+String SystemStore::GetErrMsg() const
 {
-    UserTable(_pImpl->db).Insert(name, password, ToInt32(role), restriction);
+    return _pImpl->errMsg;
+}
+
+int SystemStore::AddUser(const String &name, const String &password, UserRole role, const String &restriction)
+{
+    try
+    {
+        _pImpl->userTable->Insert(name, password, ToInt32(role), restriction);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::UserLogin(const String &name, const String &password, Int64 &Id)
+{
+    try
+    {
+        Id = _pImpl->userTable->Select(name, password);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        if ( e.getErrorCode() != SQLite::UNKNOWN_ERROR )
+            _pImpl->errMsg = e.getErrorStr();
+        else
+            _pImpl->errMsg = e.what();
+        Id = 0;
+        return NOK;
+    }
 }
 
 }

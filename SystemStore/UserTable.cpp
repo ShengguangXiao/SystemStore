@@ -10,7 +10,7 @@ namespace SystemStore
         Table::FieldEntry const myFields[] =
         {
             { SL("id"),                  Table::BIT_INTID | Table::BIT_PKEYINC, SL("") },
-            { SL("name"),                Table::BIT_NCSTR,                      SL("") },
+            { SL("name"),                Table::BIT_NCSTR | Table::BIT_UNIQUE,  SL("") },
             { SL("password"),            Table::BIT_NCSTR,                      SL("") },
             { SL("role"),                Table::BIT_INT32,                      SL("") },
             { SL("restriction"),         Table::BIT_NCSTR,                      SL("") },            
@@ -50,20 +50,28 @@ namespace SystemStore
         String const &restriction
     )
     {
-        if (!this->insert)
+        try
         {
-            int const fi[] = { NAME, PASSWORD, ROLE, RESTRICTION };
-            this->insert   = BuildInsertCommand(fi, fi + sizeof(fi) / sizeof(fi[0]));
+            if (!this->insert)
+            {
+                int const fi [ ] = { NAME, PASSWORD, ROLE, RESTRICTION };
+                this->insert = BuildInsertCommand(fi, fi + sizeof(fi) / sizeof(fi [ 0 ]));
+            }
+
+            int i = 0;
+            Bind(this->insert, ++i, name);
+            Bind(this->insert, ++i, password);
+            Bind(this->insert, ++i, role);
+            Bind(this->insert, ++i, restriction);
+            Exec(this->insert);
+
+            return GetLastInsertedRowId();
         }
-
-        int i = 0;
-        Bind(this->insert, ++i, name);
-        Bind(this->insert, ++i, password);
-        Bind(this->insert, ++i, role);
-        Bind(this->insert, ++i, restriction);
-        Exec(this->insert);
-
-        return GetLastInsertedRowId();
+        catch (...)
+        {
+            this->insert.reset();
+            throw;
+        }
     }
 
     void UserTable::UpdatePassword
@@ -81,7 +89,7 @@ namespace SystemStore
         String const &restriction
     )
     {
-        Update(id, this->updatePassword, RESTRICTION, restriction);
+        Update(id, this->updateRestriction, RESTRICTION, restriction);
     }
 
     Int64 UserTable::Select
@@ -90,18 +98,25 @@ namespace SystemStore
         String const &password
     )
     {
-        if (!this->select)
+        try
         {
-            this->select = BuildSelectCommand(ID, NAME, PASSWORD);
+            if (!this->select)
+            {
+                this->select = BuildSelectCommand(ID, NAME, PASSWORD);
+            }
+
+            int i = 0;
+            Bind(this->select, ++i, name);
+            Bind(this->select, ++i, password);
+
+            Int64 id;
+            Exec(this->select, id);
+            return id;
+        }catch (...)
+        {
+            this->select.reset();
+            throw;
         }
-
-        int i = 0;
-        Bind(this->select, ++i, name);
-        Bind(this->select, ++i, password);
-
-        Int64 id;
-        Exec(this->updatePassword, id);
-        return id;
     }
 }
 }

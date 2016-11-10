@@ -23,6 +23,10 @@ namespace AOI
 {
 namespace SystemStore
 {
+    class UserTable;
+
+    using UserTablePtr = std::shared_ptr<UserTable>;
+
     class UserTable : public IdBasedTable
     {
     public:

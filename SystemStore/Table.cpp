@@ -42,7 +42,7 @@ namespace SystemStore
       : _db(db)
     {
         if (!this->_db)
-            throw std::exception(SL("Null connection argument to SQLiteImpl1::Table::Table."));
+            throw SQLite::Exception(SL("Null connection argument to SQLiteImpl1::Table::Table."));
     }
 
     StatementPtr Table::BuildDeleteCommand(int keyFieldIndex) const
@@ -1131,30 +1131,35 @@ namespace SystemStore
     void Table::Exec(StatementPtr const &command) const
     {
         command->exec();
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     void Table::Exec(StatementPtr const &command, Int32 &value) const
     {
         command->executeStep();
         value = command->getColumn(0).getInt();
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     void Table::Exec(StatementPtr const &command, Int64 &value) const
     {
-        command->executeStep();
+        command->executeStep();        
         value = command->getColumn(0).getInt64();
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     void Table::Exec(StatementPtr const &command, double &value) const
     {
         command->executeStep();
         value = command->getColumn(0).getDouble();
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     void Table::Exec(StatementPtr const &command, String &value) const
     {
         command->executeStep();
         value = command->getColumn(0).getString();
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     void Table::Exec(StatementPtr const &command, Binary &value) const
@@ -1166,6 +1171,7 @@ namespace SystemStore
         int n = command->getColumn(0).size();
         Target *t = reinterpret_cast<Target *>(source);
         Binary(t, t + n).swap(value);
+        command->reset();   //Add by SG.Xiao, 10Nov2016
     }
 
     Int64 Table::GetLastInsertedRowId() const

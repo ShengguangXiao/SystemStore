@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "Common\\BaseDefs.h"
+#include "Common\BaseDefs.h"
 
 namespace AOI
 {
@@ -17,13 +17,18 @@ enum class UserRole
     END_,
 };
 
+#define OK          (0)
+#define NOK         (-1)
+
 class SystemStore
 {
 public:
     SystemStore();
     ~SystemStore();
     int Init();
-    void AddUser(const String & name, const String & password, UserRole role, const String &restriction);
+    String GetErrMsg() const;
+    int AddUser(const String & name, const String & password, UserRole role, const String &restriction);
+    int UserLogin(const String &name, const String &password, Int64 &Id);
 private:
     struct Impl;
     std::unique_ptr<Impl> _pImpl;
