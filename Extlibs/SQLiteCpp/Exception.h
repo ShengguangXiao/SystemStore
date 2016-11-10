@@ -38,7 +38,7 @@ struct sqlite3;
 namespace SQLite
 {
 
-
+const int UNKNOWN_ERROR =        (-1);
 /**
  * @brief Encapsulation of the error message from SQLite3, based on std::runtime_error.
  */
