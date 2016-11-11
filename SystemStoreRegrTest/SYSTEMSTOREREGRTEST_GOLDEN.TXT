@@ -1,0 +1,17 @@
+
+------------------------------------------
+USER TABLE CREATE USER TEST #1 STARTING
+------------------------------------------
+Success to add user "Engineer"
+Success to add user "Operator"
+Success to add user "Admin"
+Success to add user "Developer"
+Failed to add user "Engineer", error message: constraint failed
+Success to add user "Engineer1"
+
+------------------------------------------
+USER TABLE LOGIN TEST #1 STARTING
+------------------------------------------
+Success log in, user ID: 1
+Failed to log in, error message: No row to get a column from. executeStep() was not called, or returned false.
+Success log in, user ID: 2

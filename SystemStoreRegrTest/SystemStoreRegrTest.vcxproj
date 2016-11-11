@@ -61,6 +61,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>$(OutDir)$(TargetName)$(TargetExt) -n &gt; $(ProjectDir)$(ProjectName)_result.txt
+FC /L $(ProjectDir)$(ProjectName)_golden.txt $(ProjectDir)$(ProjectName)_result.txt</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -81,10 +85,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="SYSTEMSTOREREGRTEST_GOLDEN.TXT" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -92,6 +98,21 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SystemStoreRegrTest.cpp" />
+    <ClCompile Include="UserTableTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extlibs\SQLite3\Sqlite3\Sqlite3.vcxproj">
+      <Project>{08ac3245-22f2-4c11-9f1c-53a5f6bb8eb3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Extlibs\SQLiteCpp\SQLiteCpp\SQLiteCpp.vcxproj">
+      <Project>{4a0a5f9f-cb43-491d-911c-881a0f83b33e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Intlibs\Common\2013_Common.vcxproj">
+      <Project>{43f2c3b7-7ce3-44ba-9b31-d7a2b524eefd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemStore\SystemStore.vcxproj">
+      <Project>{c0119840-da71-47df-a1b1-23a2357c4e11}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
