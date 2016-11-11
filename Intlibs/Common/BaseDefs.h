@@ -48,5 +48,6 @@
 #include <boost/variant.hpp>
 #include "BaseTypes.h"
 #include "FileUtils.h"
+#include "Exception.h"
 
 #endif//AGILENT_BBOX_COMMON_BASEDEFS_H

@@ -27,8 +27,6 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-namespace Agilent
-{
 namespace AOI
 {
     namespace
@@ -418,5 +416,4 @@ namespace AOI
             return SAME;
         }
     }
-}
 }

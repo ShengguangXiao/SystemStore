@@ -30,8 +30,6 @@
 
 namespace bfs = boost::filesystem;
 
-namespace Agilent
-{
 namespace AOI
 {
     namespace
@@ -433,5 +431,4 @@ namespace AOI
             paths.push_back(entry.path().string());
         }
     }
-}
 }
