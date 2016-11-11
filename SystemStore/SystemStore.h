@@ -26,10 +26,12 @@ public:
     SystemStore();
     ~SystemStore();
     int Init();
+    static String GetDatabaseName();
     String GetErrMsg() const;
     int AddUser(const String & name, const String & password, UserRole role, const String &restriction);
     int UserLogin(const String &name, const String &password, Int64 &Id);
 private:
+    String _Encrypt(const String &input);
     struct Impl;
     std::unique_ptr<Impl> _pImpl;
 };

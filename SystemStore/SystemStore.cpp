@@ -3,6 +3,7 @@
 #include "SystemStore.h"
 #include "UserTable.h"
 #include "Constants.h"
+#include "Rijndael.h"
 
 namespace AOI
 {
@@ -34,6 +35,11 @@ int SystemStore::Init()
     return 0;
 }
 
+/*static*/ String SystemStore::GetDatabaseName()
+{
+    return String(SYSTEM_DB_NAME);
+}
+
 String SystemStore::GetErrMsg() const
 {
     return _pImpl->errMsg;
@@ -43,7 +49,7 @@ int SystemStore::AddUser(const String &name, const String &password, UserRole ro
 {
     try
     {
-        _pImpl->userTable->Insert(name, password, ToInt32(role), restriction);
+        _pImpl->userTable->Insert(name, _Encrypt( password ), ToInt32(role), restriction);
         return OK;
     }
     catch(SQLite::Exception &e)
@@ -57,7 +63,7 @@ int SystemStore::UserLogin(const String &name, const String &password, Int64 &Id
 {
     try
     {
-        Id = _pImpl->userTable->Select(name, password);
+        Id = _pImpl->userTable->Select(name, _Encrypt ( password ) );
         return OK;
     }
     catch(SQLite::Exception &e)
@@ -69,6 +75,25 @@ int SystemStore::UserLogin(const String &name, const String &password, Int64 &Id
         Id = 0;
         return NOK;
     }
+}
+
+String SystemStore::_Encrypt(const String &strTarget)
+{
+ //   int len = strTarget.length();
+	//char a;
+	//String strFinal(strTarget);
+
+	//for (int i = 0; i <= (len-1); i++)
+	//{
+	//	a = strTarget.at(i); 
+	//	int b = (int)a; //get the ASCII value of 'a'
+	//	b += 2; //Mulitply the ASCII value by 2
+	//	if (b > 254) { b = 254; }
+	//	a = (char)b; //Set the new ASCII value back into the char
+	//	strFinal.insert(i , 1, a); //Insert the new Character back into the string
+	//}
+	//return String(strFinal, 0, len);
+    return strTarget;
 }
 
 }

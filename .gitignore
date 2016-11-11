@@ -22,3 +22,4 @@ Obj
 *.ipch
 *.suo
 *.cfg
+SystemStoreRegrTest/SystemStoreRegrTest_result.txt

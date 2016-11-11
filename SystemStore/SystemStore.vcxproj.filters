@@ -36,6 +36,9 @@
     <ClInclude Include="IdBasedTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rijndael.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SystemStore.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UserTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rijndael.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

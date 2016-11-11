@@ -7,6 +7,7 @@ namespace SystemStore
 {
 
 #define SYSTEM_DB_NAME      "system.cfg"
+#define ENCRYPT_KEY         "ABCDEFGH12346789"
 
 namespace Enum
 {
