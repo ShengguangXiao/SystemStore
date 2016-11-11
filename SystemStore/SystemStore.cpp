@@ -93,7 +93,14 @@ String SystemStore::_Encrypt(const String &strTarget)
 	//	strFinal.insert(i , 1, a); //Insert the new Character back into the string
 	//}
 	//return String(strFinal, 0, len);
-    return strTarget;
+    //return strTarget;
+    		CRijndael oRijndael;
+		oRijndael.MakeKey(ENCRYPT_KEY, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16, 16);
+		char szDataIn[] = "Engineer";
+		char szDataOut[1000];
+        memset(szDataOut, 0, sizeof (szDataOut));
+		oRijndael.EncryptBlock(strTarget.c_str(), szDataOut);
+        return String(szDataOut);
 }
 
 }

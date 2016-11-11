@@ -112,7 +112,7 @@ namespace SystemStore
     {
         // Used when one single-column row will be selected.
         String const fmt = SL("select %s from %s where %s = ? and %s = ?;");
-        String const sql = (boost::format(fmt) % GetFieldName(fieldIndex) % GetTableName() % GetFieldName(keyFieldIndex1) % GetFieldName(keyFieldIndex1) ).str();
+        String const sql = (boost::format(fmt) % GetFieldName(fieldIndex) % GetTableName() % GetFieldName(keyFieldIndex1) % GetFieldName(keyFieldIndex2) ).str();
         return std::make_shared<SQLite::Statement>( *_db.get(), sql );
     }
 

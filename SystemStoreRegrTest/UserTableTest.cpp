@@ -37,7 +37,7 @@ static void TestCreateUser()
     else
         std::cout << "Success to add user \"Engineer\"" << std::endl;
 
-    nStatus = systemStore.AddUser("Operator", "Operator", UserRole::OPERATOR, TEST_RESTRICTION);
+    nStatus = systemStore.AddUser("Op", "Operator", UserRole::OPERATOR, TEST_RESTRICTION);
     if ( nStatus != OK )
         std::cout << "Failed to add user \"Operator\", error message: " << systemStore.GetErrMsg() << std::endl;
     else
@@ -94,7 +94,7 @@ static void TestLogin()
     else
         std::cout << "Success log in, user ID: " << Id << std::endl;
 
-    nStatus = systemStore.UserLogin("Operator", "Operator", Id);
+    nStatus = systemStore.UserLogin("Op", "Operator", Id);
     if ( nStatus != OK )
         std::cout << "Failed to log in, error message: " << systemStore.GetErrMsg() << std::endl;
     else
