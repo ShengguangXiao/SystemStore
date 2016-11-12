@@ -22,4 +22,5 @@ Obj
 *.ipch
 *.suo
 *.cfg
+*.bak
 SystemStoreRegrTest/SystemStoreRegrTest_result.txt

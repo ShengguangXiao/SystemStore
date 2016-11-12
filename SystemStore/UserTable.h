@@ -82,17 +82,21 @@ namespace SystemStore
             String const &restriction
         );
 
-        Int64 Select
+        Int64 SelectUser
         (
             String const &name, 
             String const &password
         );
 
+        void SelectRole            (Int64 id, Int32            &) const;
+        void SelectRestriction     (Int64 id, String           &) const;
     private:
-        StatementPtr        insert;
-        StatementPtr        updatePassword;
-        StatementPtr        updateRestriction;
-        StatementPtr        select;
+        StatementPtr            insert;
+        StatementPtr            updatePassword;
+        StatementPtr            updateRestriction;
+        StatementPtr            selectUser;
+        StatementPtr mutable    selectRole;
+        StatementPtr mutable    selectRestriction;
     };
 }
 }

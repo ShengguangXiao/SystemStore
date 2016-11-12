@@ -20,6 +20,7 @@ SystemStore::SystemStore():_pImpl(std::make_unique<Impl>())
 {
     // Open a database file in create/write mode
     _pImpl->db = std::make_shared<SQLite::Database>(SYSTEM_DB_NAME, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    _Init();
 }
 
 
@@ -27,7 +28,7 @@ SystemStore::~SystemStore()
 {
 }
 
-int SystemStore::Init()
+Int32 SystemStore::_Init()
 {
     _pImpl->userTable = std::make_shared<UserTable>( _pImpl->db );
     if ( !_pImpl->db->tableExists ( UserTable::StaticGetTableName() ) )
@@ -63,7 +64,7 @@ int SystemStore::UserLogin(const String &name, const String &password, Int64 &Id
 {
     try
     {
-        Id = _pImpl->userTable->Select(name, _Encrypt ( password ) );
+        Id = _pImpl->userTable->SelectUser(name, _Encrypt ( password ) );
         return OK;
     }
     catch(SQLite::Exception &e)
@@ -73,6 +74,44 @@ int SystemStore::UserLogin(const String &name, const String &password, Int64 &Id
         else
             _pImpl->errMsg = e.what();
         Id = 0;
+        return NOK;
+    }
+}
+
+int SystemStore::UpdatePassword(const String &name, const String &password, const String &passwordNew)
+{
+    try
+    {
+        Int64 Id = _pImpl->userTable->SelectUser(name, _Encrypt ( password ) );
+        _pImpl->userTable->UpdatePassword(Id, _Encrypt ( passwordNew ) );
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        if ( e.getErrorCode() != SQLite::UNKNOWN_ERROR )
+            _pImpl->errMsg = e.getErrorStr();
+        else
+            _pImpl->errMsg = e.what();
+        return NOK;
+    }
+}
+
+int SystemStore::GetUserRoleAndRestriction(Int64 Id, UserRole&role, String &restriction)
+{
+    try
+    {
+        Int32 n32Role;
+        _pImpl->userTable->SelectRole(Id, n32Role);
+        role = static_cast<UserRole>(n32Role);
+        _pImpl->userTable->SelectRestriction(Id, restriction);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        if ( e.getErrorCode() != SQLite::UNKNOWN_ERROR )
+            _pImpl->errMsg = e.getErrorStr();
+        else
+            _pImpl->errMsg = e.what();
         return NOK;
     }
 }
@@ -93,14 +132,15 @@ String SystemStore::_Encrypt(const String &strTarget)
 	//	strFinal.insert(i , 1, a); //Insert the new Character back into the string
 	//}
 	//return String(strFinal, 0, len);
+
     //return strTarget;
-    		CRijndael oRijndael;
-		oRijndael.MakeKey(ENCRYPT_KEY, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16, 16);
-		char szDataIn[] = "Engineer";
-		char szDataOut[1000];
-        memset(szDataOut, 0, sizeof (szDataOut));
-		oRijndael.EncryptBlock(strTarget.c_str(), szDataOut);
-        return String(szDataOut);
+
+    CRijndael oRijndael;
+    oRijndael.MakeKey(ENCRYPT_KEY, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16, 16);
+    char szDataOut[1000];
+    memset(szDataOut, 0, sizeof(szDataOut));
+    oRijndael.EncryptBlock(strTarget.c_str(), szDataOut);
+    return String(szDataOut);
 }
 
 }

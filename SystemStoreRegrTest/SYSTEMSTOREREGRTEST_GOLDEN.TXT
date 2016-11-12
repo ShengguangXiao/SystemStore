@@ -15,3 +15,28 @@ USER TABLE LOGIN TEST #1 STARTING
 Success log in, user ID: 1
 Failed to log in, error message: No row to get a column from. executeStep() was not called, or returned false.
 Success log in, user ID: 2
+
+------------------------------------------
+USER TABLE UPDATE PASSWORD TEST #1 STARTING
+------------------------------------------
+Success to update password
+Failed to log in use old password, error message: No row to get a column from. executeStep() was not called, or returned false.
+Success to log in use new password
+
+----------------------------------------------
+USER TABLE GET ROLE AND RESTICTION #1 STARTING
+----------------------------------------------
+Success to get role and restriction
+Role: 2
+Restriction: <?xml version="1.0"?>
+<restrictions version="1.0.0.0">
+    <!-- File Menu -->
+    <restriction key="Auto" default="true" value="true" />
+    <restriction key="Auto_Start" default="true" value="true" />
+    <restriction key="Auto_Stop" default="true" value="true" />
+    <!-- Program Menu -->
+    <!-- Config Menu -->
+    <!-- Calibration Menu -->
+    <!-- Utility Menu -->
+    <!-- System Menu -->
+</restrictions>

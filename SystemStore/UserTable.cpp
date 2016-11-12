@@ -92,7 +92,7 @@ namespace SystemStore
         Update(id, this->updateRestriction, RESTRICTION, restriction);
     }
 
-    Int64 UserTable::Select
+    Int64 UserTable::SelectUser
     (
         String const &name,
         String const &password
@@ -100,23 +100,36 @@ namespace SystemStore
     {
         try
         {
-            if (!this->select)
+            if (!this->selectUser)
             {
-                this->select = BuildSelectCommand(ID, NAME, PASSWORD);
+                this->selectUser = BuildSelectCommand(ID, NAME, PASSWORD);
             }
 
             int i = 0;
-            Bind(this->select, ++i, name);
-            Bind(this->select, ++i, password);
+            Bind(this->selectUser, ++i, name);
+            Bind(this->selectUser, ++i, password);
 
             Int64 id;
-            Exec(this->select, id);
+            Exec(this->selectUser, id);
             return id;
         }catch (...)
         {
-            this->select.reset();
+            //This reset must have. Because the exception may throw from command->getColumn(0), so in the Exec function,
+            //the reset doesn't run.
+            this->selectUser->reset();
             throw;
         }
     }
+
+    void UserTable::SelectRole(Int64 id, Int32 &value) const
+    {
+        Select(id, this->selectRole, ROLE, value);
+    }
+
+    void UserTable::SelectRestriction(Int64 id, String &value) const
+    {
+        Select(id, this->selectRestriction, RESTRICTION, value);
+    }
+
 }
 }

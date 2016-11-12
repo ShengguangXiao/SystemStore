@@ -95,6 +95,9 @@
     <ClCompile Include="TestSystemStore.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Intlibs\Common\2013_Common.vcxproj">
+      <Project>{43f2c3b7-7ce3-44ba-9b31-d7a2b524eefd}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\SystemStore\SystemStore.vcxproj">
       <Project>{c0119840-da71-47df-a1b1-23a2357c4e11}</Project>
     </ProjectReference>

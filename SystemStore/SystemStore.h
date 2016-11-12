@@ -25,13 +25,15 @@ class SystemStore
 public:
     SystemStore();
     ~SystemStore();
-    int Init();
     static String GetDatabaseName();
     String GetErrMsg() const;
     int AddUser(const String & name, const String & password, UserRole role, const String &restriction);
     int UserLogin(const String &name, const String &password, Int64 &Id);
+    int UpdatePassword(const String &name, const String &password, const String &passwordNew);
+    int GetUserRoleAndRestriction(Int64 Id, UserRole&role, String &restriction );
 private:
     String _Encrypt(const String &input);
+    Int32 _Init();
     struct Impl;
     std::unique_ptr<Impl> _pImpl;
 };

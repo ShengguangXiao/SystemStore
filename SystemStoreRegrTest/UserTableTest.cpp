@@ -7,18 +7,19 @@
 
 using namespace AOI::SystemStore;
 
-static AOI::String TEST_RESTRICTION = "<?xml version=\"1.0\"?>\
-	<restrictions version=\"1.0.0.0\">\
-		<!-- File Menu --> \
-		<restriction key=\"Auto\" default=\"true\" value=\"true\" /> \
-		<restriction key=\"Auto_Start\" default=\"true\" value=\"true\" /> \
-		<restriction key=\"Auto_Stop\" default=\"true\" value=\"true\" /> \
-		<!-- Program Menu --> \
-		<!-- Config Menu --> \
-        <!-- Calibration Menu --> \
-        <!-- Utility Menu --> \
-        <!-- System Menu --> \
-	</restrictions>";
+static AOI::String TEST_RESTRICTION = 
+"<?xml version=\"1.0\"?>\n\
+<restrictions version=\"1.0.0.0\">\n\
+    <!-- File Menu -->\n\
+    <restriction key=\"Auto\" default=\"true\" value=\"true\" />\n\
+    <restriction key=\"Auto_Start\" default=\"true\" value=\"true\" />\n\
+    <restriction key=\"Auto_Stop\" default=\"true\" value=\"true\" />\n\
+    <!-- Program Menu -->\n\
+    <!-- Config Menu -->\n\
+    <!-- Calibration Menu -->\n\
+    <!-- Utility Menu -->\n\
+    <!-- System Menu -->\n\
+</restrictions>";
 
 static void TestCreateUser()
 {
@@ -30,7 +31,6 @@ static void TestCreateUser()
     SystemStore systemStore;
     int nStatus = OK;
 
-    systemStore.Init();
     nStatus = systemStore.AddUser("Engineer", "Engineer", UserRole::ENGINEER, TEST_RESTRICTION);
     if ( nStatus != OK )
         std::cout << "Failed to add user \"Engineer\", error message: " << systemStore.GetErrMsg() << std::endl;
@@ -78,7 +78,6 @@ static void TestLogin()
     std::cout << std::endl;
 
     SystemStore systemStore;
-    systemStore.Init();
     __int64 Id;
     int nStatus = OK;
 
@@ -101,11 +100,65 @@ static void TestLogin()
         std::cout << "Success log in, user ID: " << Id << std::endl;
 }
 
+void TestUpdatePassword()
+{
+    std::cout << std::endl << "------------------------------------------";
+    std::cout << std::endl << "USER TABLE UPDATE PASSWORD TEST #1 STARTING";
+    std::cout << std::endl << "------------------------------------------";
+    std::cout << std::endl;
+
+    SystemStore systemStore;
+    __int64 Id;
+    int nStatus = OK;
+
+    std::string passwordNew = "Yanliyuan1234$%";
+    nStatus = systemStore.UpdatePassword("Engineer", "Engineer", passwordNew);
+    if ( nStatus != OK )
+        std::cout << "Failed to update password, error message: " << systemStore.GetErrMsg() << std::endl;
+    else
+        std::cout << "Success to update password" << std::endl;
+
+    nStatus = systemStore.UserLogin("Engineer", "Engineer", Id);
+    if ( nStatus != OK )
+        std::cout << "Failed to log in use old password, error message: " << systemStore.GetErrMsg() << std::endl;
+
+    nStatus = systemStore.UserLogin("Engineer", passwordNew, Id);
+    if ( nStatus != OK )
+        std::cout << "Failed to log in use new password, error message: " << systemStore.GetErrMsg() << std::endl;
+    else
+        std::cout << "Success to log in use new password" << std::endl;
+
+    std::cout << std::endl << "----------------------------------------------";
+    std::cout << std::endl << "USER TABLE GET ROLE AND RESTICTION #1 STARTING";
+    std::cout << std::endl << "----------------------------------------------";
+    std::cout << std::endl;
+
+    UserRole role;
+    AOI::String restriction;
+    nStatus = systemStore.GetUserRoleAndRestriction(Id, role, restriction );
+    if ( nStatus != OK )
+        std::cout << "Failed to get role and restriction, error message: " << systemStore.GetErrMsg() << std::endl;
+    else
+    {
+        std::cout << "Success to get role and restriction" << std::endl;
+        std::cout << "Role: " << static_cast<__int32>(role) << std::endl;
+        std::cout << "Restriction: " << restriction << std::endl;
+    }
+}
+
 void TestUserTable()
 {
+    try
+    {
     if ( AOI::FileUtils::Exists(SystemStore::GetDatabaseName()))
         AOI::FileUtils::Remove(SystemStore::GetDatabaseName());
+    }catch ( std::exception &e)
+    {
+        std::cout << "Failed to delete old db file, error: " << e.what() << std::endl;
+        return;
+    }
 
     TestCreateUser();
     TestLogin();
+    TestUpdatePassword();
 }
