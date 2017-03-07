@@ -17,7 +17,7 @@
 //   2010-08-28 (MM) Got rid of EmptyString.
 //   2010-08-10 (MM) Created.
 //
-// Copyright (c) 2010, 2012, 2014 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010, 2012, 2014 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "BaseTypes.h"

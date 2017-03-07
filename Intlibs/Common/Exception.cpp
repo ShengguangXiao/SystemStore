@@ -15,7 +15,7 @@
 //   2010-08-29 (MM) Changed over to using Boost's format capabilities.
 //   2010-08-10 (MM) Created.
 //
-// Copyright (c) 2010-2011 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010-2011 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "BaseDefs.h"

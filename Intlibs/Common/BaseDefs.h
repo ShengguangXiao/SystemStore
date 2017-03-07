@@ -17,7 +17,7 @@
 //   2010-12-06 (MM) Under construction.
 //   2010-08-09 (MM) Created.
 //
-// Copyright (c) 2010-2011, 2014 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010-2011, 2014 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include <algorithm>

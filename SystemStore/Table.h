@@ -26,7 +26,7 @@
  *   2010-12-16 (MM) Added SQL builders, binders, and another Join.
  *   2010-12-05 (MM) Created.
  *
- * Copyright (c) 2010-2012, 2015 Keysight Technologies, Inc.  All rights reserved.
+ * Copyright (c) 2010-2012, 2015 Xiao Shengguang.  All rights reserved.
  ****************************************************************************/
 
 #include "Common/BaseDefs.h"

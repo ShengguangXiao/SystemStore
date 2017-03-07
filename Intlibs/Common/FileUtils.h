@@ -16,7 +16,7 @@
 //   2011-01-14 (MM) Added file writers.
 //   2010-12-20 (MM) Created.
 //
-// Copyright (c) 2010-2012, 2014 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010-2012, 2014 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "BaseDefs.h"

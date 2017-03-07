@@ -16,7 +16,7 @@
 //   2011-01-10 (MM) Started using "file_string()" rather than "filename()".
 //   2010-12-20 (MM) Created.
 //
-// Copyright (c) 2010-2012, 2014 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010-2012, 2014 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "BaseDefs.h"

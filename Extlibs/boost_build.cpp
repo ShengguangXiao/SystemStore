@@ -10,7 +10,7 @@
 // Modifications
 //   2010-09-19 (MM) Created.
 //
-// Copyright (c) 2010 Agilent Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "boost/shared_ptr.hpp"

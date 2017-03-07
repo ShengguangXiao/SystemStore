@@ -15,7 +15,7 @@
  *   2010-12-10 (MM) Added generic Select/Update methods.
  *   2010-12-06 (MM) Created.
  *
- * Copyright (c) 2010, 2012 Agilent Technologies, Inc.  All rights reserved.
+ * Copyright (c) 2010, 2012 Xiao Shengguang.  All rights reserved.
  ****************************************************************************/
 
 #include "Table.h"

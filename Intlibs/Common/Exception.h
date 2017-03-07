@@ -24,7 +24,7 @@
 //   2010-12-03 (MM) Changed over to "std::runtime_error" as the base.
 //   2010-08-10 (MM) Created.
 //
-// Copyright (c) 2010-2015 Keysight Technologies, Inc.  All rights reserved.
+// Copyright (c) 2010-2015 Xiao Shengguang.  All rights reserved.
 //****************************************************************************
 
 #include "BaseDefs.h"
