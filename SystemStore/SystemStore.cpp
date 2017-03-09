@@ -2,6 +2,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include "SystemStore.h"
 #include "UserTable.h"
+#include "ParamTable.h"
 #include "Constants.h"
 #include "Rijndael.h"
 
@@ -13,6 +14,7 @@ namespace SystemStore
 struct SystemStore::Impl { // as before
     DatabasePtr     db;
     UserTablePtr    userTable;
+    ParamTablePtr   paramTable;
     String          errMsg;
 };
 
@@ -23,7 +25,6 @@ SystemStore::SystemStore():_pImpl(std::make_unique<Impl>())
     _Init();
 }
 
-
 SystemStore::~SystemStore()
 {
 }
@@ -33,6 +34,10 @@ Int32 SystemStore::_Init()
     _pImpl->userTable = std::make_shared<UserTable>( _pImpl->db );
     if ( !_pImpl->db->tableExists ( UserTable::StaticGetTableName() ) )
         _pImpl->userTable->Create();
+
+    _pImpl->paramTable = std::make_shared<ParamTable>( _pImpl->db );
+    if ( ! _pImpl->db->tableExists ( ParamTable::StaticGetTableName() ) )
+        _pImpl->paramTable->Create();
     return 0;
 }
 
@@ -118,29 +123,104 @@ int SystemStore::GetUserRoleAndRestriction(Int64 Id, UserRole&role, String &rest
 
 String SystemStore::_Encrypt(const String &strTarget)
 {
- //   int len = strTarget.length();
-	//char a;
-	//String strFinal(strTarget);
-
-	//for (int i = 0; i <= (len-1); i++)
-	//{
-	//	a = strTarget.at(i); 
-	//	int b = (int)a; //get the ASCII value of 'a'
-	//	b += 2; //Mulitply the ASCII value by 2
-	//	if (b > 254) { b = 254; }
-	//	a = (char)b; //Set the new ASCII value back into the char
-	//	strFinal.insert(i , 1, a); //Insert the new Character back into the string
-	//}
-	//return String(strFinal, 0, len);
-
-    //return strTarget;
-
     CRijndael oRijndael;
     oRijndael.MakeKey(ENCRYPT_KEY, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16, 16);
     char szDataOut[1000];
     memset(szDataOut, 0, sizeof(szDataOut));
     oRijndael.EncryptBlock(strTarget.c_str(), szDataOut);
     return String(szDataOut);
+}
+
+int SystemStore::AddParam(const String &name, Int32 value)
+{
+    String strValue = std::to_string(value);
+    try
+    {
+        _pImpl->paramTable->Insert(name, strValue);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::AddParam(const String &name, double value)
+{
+    String strValue = std::to_string(value);
+    try
+    {
+        _pImpl->paramTable->Insert(name, strValue);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::UpdateParam(const String &name, Int32 value)
+{
+    String strValue = std::to_string(value);
+    try
+    {
+        _pImpl->paramTable->UpdateValue(name, strValue);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::UpdateParam(const String &name, double value)
+{
+    String strValue = std::to_string(value);
+    try
+    {
+        _pImpl->paramTable->UpdateValue(name, strValue);
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::GetParam(const String &name, Int32 &value)
+{
+    try
+    {
+        String strValue;
+        _pImpl->paramTable->SelectValue(name, strValue);
+        value = std::strtol ( strValue.c_str(), NULL, 10 );
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
+}
+
+int SystemStore::GetParam(const String &name, double &value)
+{
+    try
+    {
+        String strValue;
+        _pImpl->paramTable->SelectValue(name, strValue);
+        value = std::strtof ( strValue.c_str(), NULL );
+        return OK;
+    }
+    catch(SQLite::Exception &e)
+    {
+        _pImpl->errMsg = e.getErrorStr();
+        return NOK;
+    }
 }
 
 }

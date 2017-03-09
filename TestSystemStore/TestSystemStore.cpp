@@ -8,11 +8,8 @@
 
 using namespace AOI::SystemStore;
 
-int _tmain(int argc, _TCHAR* argv[])
+void TestUserTable()
 {
-    if ( AOI::FileUtils::Exists(SystemStore::GetDatabaseName()))
-        AOI::FileUtils::Remove(SystemStore::GetDatabaseName());
-
     SystemStore systemStore;
     int nStatus = OK;
 
@@ -49,7 +46,51 @@ int _tmain(int argc, _TCHAR* argv[])
         std::cout << "Role: " << static_cast<__int32>(role) << std::endl;
         std::cout << "Restriction: " << restriction << std::endl;
     }
+}
 
+void TestParamTable()
+{   
+    SystemStore systemStore;
+    int nStatus = OK;
+
+    nStatus = systemStore.AddParam("Language", 1);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+    
+    nStatus = systemStore.AddParam("accurary", 1.8);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+
+    nStatus = systemStore.UpdateParam("Language", 2);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+    
+    nStatus = systemStore.UpdateParam("accurary", 2.8);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+
+    int nValue = 0;
+    nStatus = systemStore.GetParam("Language", nValue);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+    else
+        std::cout << "Success get int param, value: " << nValue << std::endl;
+    
+    double dValue = 0;
+    nStatus = systemStore.GetParam("accurary", dValue);
+    if ( nStatus != OK )
+        std::cout << "Failed to add parameter, error message: " << systemStore.GetErrMsg() << std::endl;
+     else
+        std::cout << "Success get float param, value: " << dValue << std::endl;
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    if ( AOI::FileUtils::Exists(SystemStore::GetDatabaseName()))
+        AOI::FileUtils::Remove(SystemStore::GetDatabaseName());
+
+    TestUserTable();
+    TestParamTable();
 	return 0;
 }
 

@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="IdBasedTable.h" />
+    <ClInclude Include="ParamTable.h" />
     <ClInclude Include="Rijndael.h" />
     <ClInclude Include="SystemStore.h" />
     <ClInclude Include="Table.h" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IdBasedTable.cpp" />
+    <ClCompile Include="ParamTable.cpp" />
     <ClCompile Include="Rijndael.cpp" />
     <ClCompile Include="SystemStore.cpp" />
     <ClCompile Include="Table.cpp" />

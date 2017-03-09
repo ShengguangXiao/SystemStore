@@ -1,7 +1,7 @@
 #pragma once
 
+#include <string>
 #include <memory>
-#include "Common\BaseDefs.h"
 
 namespace AOI
 {
@@ -19,6 +19,9 @@ enum class UserRole
 
 #define OK          (0)
 #define NOK         (-1)
+using String =      std::string;
+using Int64 =       __int64;
+using Int32 =       __int32;
 
 class SystemStore
 {
@@ -31,6 +34,12 @@ public:
     int UserLogin(const String &name, const String &password, Int64 &Id);
     int UpdatePassword(const String &name, const String &password, const String &passwordNew);
     int GetUserRoleAndRestriction(Int64 Id, UserRole&role, String &restriction );
+    int AddParam(const String &name, Int32 value);
+    int AddParam(const String &name, double value);
+    int UpdateParam(const String &name, Int32 value);
+    int UpdateParam(const String &name, double value);
+    int GetParam(const String &name, Int32 &value);
+    int GetParam(const String &name, double &value);
 private:
     String _Encrypt(const String &input);
     Int32 _Init();
