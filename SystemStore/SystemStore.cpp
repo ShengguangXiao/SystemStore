@@ -1,6 +1,9 @@
 #include "Common/BaseDefs.h"
 #include <SQLiteCpp/SQLiteCpp.h>
+
+#define API_CALL  __declspec(dllexport)
 #include "SystemStore.h"
+
 #include "UserTable.h"
 #include "ParamTable.h"
 #include "Constants.h"

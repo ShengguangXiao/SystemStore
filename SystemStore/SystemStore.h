@@ -3,6 +3,17 @@
 #include <string>
 #include <memory>
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+#ifndef API_CALL
+#ifdef  __cplusplus
+#define API_CALL __declspec(dllimport)
+#else
+#define API_CALL extern __declspec(dllimport) __stdcall
+#endif
+#endif
+
 namespace AOI
 {
 namespace SystemStore
@@ -23,7 +34,7 @@ using String =      std::string;
 using Int64 =       __int64;
 using Int32 =       __int32;
 
-class SystemStore
+class API_CALL SystemStore
 {
 public:
     SystemStore();
@@ -49,3 +60,5 @@ private:
 
 }
 }
+
+#pragma warning(pop)
